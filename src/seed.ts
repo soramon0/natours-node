@@ -1,11 +1,14 @@
 import mongoose from 'mongoose';
 import path from 'path';
 import fs from 'fs';
-import { DB_OPTIONS, DB_URI } from '../../src/constant';
-import Tour, { ITour } from '../../src/models/tour';
+import { DB_OPTIONS, DB_URI } from './constant';
+import Tour, { ITour } from './models/tour';
 
 const tours: [ITour] = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, 'tours.json'), 'utf-8')
+  fs.readFileSync(
+    path.resolve(__dirname, '..', 'dev-data', 'data', 'tours.json'),
+    'utf-8'
+  )
 );
 
 mongoose.connect(DB_URI, DB_OPTIONS).then(async () => {

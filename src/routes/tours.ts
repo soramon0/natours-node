@@ -1,25 +1,14 @@
-import { Router, Request, Response } from 'express';
-import fs from 'fs';
-import path from 'path';
-
-const dataPath = path.resolve(
-  __dirname,
-  '..',
-  '..',
-  'dev-data',
-  'data',
-  'tours-simple.json'
-);
-const tours = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+import { Router } from 'express';
+import * as tours from '../controllers/tours';
 
 const router = Router();
 
-router.route('/').get((req: Request, res: Response) => {
-  return res.json({
-    status: 'success',
-    count: tours.length,
-    tours,
-  });
-});
+router.route('/').get(tours.listTours).post(tours.createTour);
+
+router
+  .route('/:id')
+  .get(tours.retriveTour)
+  .patch(tours.UpdateTour)
+  .delete(tours.DestroyTour);
 
 export default router;

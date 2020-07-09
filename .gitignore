@@ -1,3 +1,4 @@
 sections
 node_modules
 dist
+src/config.env

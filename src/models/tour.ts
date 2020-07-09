@@ -1,5 +1,5 @@
-import { Schema, model, Document } from 'mongoose';
-// import slugify from 'slugify';
+import { Schema, model, Document, Query } from 'mongoose';
+import slugify from 'slugify';
 
 export interface ITour extends Document {
   name: string;
@@ -20,7 +20,7 @@ export interface ITour extends Document {
   secretTour: boolean;
 }
 
-const tourSchema = new Schema(
+const tourSchema: Schema<ITour> = new Schema(
   {
     name: {
       type: String,
@@ -103,5 +103,25 @@ const tourSchema = new Schema(
     toObject: { virtuals: true },
   }
 );
+
+tourSchema.virtual('durationWeeks').get(function () {
+  // @ts-ignore
+  return this.duration / 7;
+});
+
+tourSchema.pre('save', function (next) {
+  this.set('slug', slugify(this.get('name'), { lower: true }));
+  next();
+});
+
+tourSchema.pre<Query<ITour>>(/^find/, function (next) {
+  this.find({ secretTour: { $ne: true } });
+  next();
+});
+
+tourSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+  next();
+});
 
 export default model<ITour>('Tour', tourSchema);

@@ -1,20 +1,28 @@
 import { Router } from 'express';
 import * as tours from '../controllers/tours';
+import { catchAsync } from '../lib/AppError';
 
 const router = Router();
 
-router.route('/').get(tours.listTours).post(tours.createTour);
+router
+  .route('/')
+  .get(catchAsync(tours.listTours))
+  .post(catchAsync(tours.createTour));
 
-router.get('/top-5-cheap', tours.topTours, tours.listTours);
+router.get(
+  '/top-5-cheap',
+  catchAsync(tours.topTours),
+  catchAsync(tours.listTours)
+);
 
-router.get('/stats', tours.listStats);
+router.get('/stats', catchAsync(tours.listStats));
 
-router.get('/monthly-plan/:year', tours.retrieveMonthlyPlan);
+router.get('/monthly-plan/:year', catchAsync(tours.retrieveMonthlyPlan));
 
 router
   .route('/:id')
-  .get(tours.retrieveTour)
-  .patch(tours.updateTour)
-  .delete(tours.destroyTour);
+  .get(catchAsync(tours.retrieveTour))
+  .patch(catchAsync(tours.updateTour))
+  .delete(catchAsync(tours.destroyTour));
 
 export default router;

@@ -36,3 +36,13 @@ export function handleDBValidation(err: any): AppError {
   const message = `Invalid input data. ${errors.join('. ')}`;
   return new AppError(message, 400);
 }
+
+export function handleJWTError(_: any): AppError {
+  const message = 'Invalid token. Please log in again!';
+  return new AppError(message, 401);
+}
+
+export function handleJWTExpired(_: any): AppError {
+  const message = 'Token Expired. Please log in again!';
+  return new AppError(message, 401);
+}

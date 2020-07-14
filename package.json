@@ -15,16 +15,25 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "install": "^0.13.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.22",
     "morgan": "^1.10.0",
-    "slugify": "^1.4.4"
+    "nodemailer": "^6.4.10",
+    "slugify": "^1.4.4",
+    "validator": "^13.1.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.7",
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.7.30",
     "@types/morgan": "^1.9.1",
+    "@types/nodemailer": "^6.4.0",
+    "@types/validator": "^13.1.0",
     "nodemon": "^2.0.4",
     "ts-node": "^8.10.2",
     "tslint": "^6.1.2",
